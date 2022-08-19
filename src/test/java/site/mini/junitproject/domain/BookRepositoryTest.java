@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import apple.laf.JRSUIState.TitleBarHeightState;
-import lombok.extern.slf4j.Slf4j;
 
 @DataJpaTest //DB 와 관련된 컴포넌트만 메모리에 로딩
 public class BookRepositoryTest {
@@ -17,12 +17,28 @@ public class BookRepositoryTest {
 @Autowired
  private BookRepository repository;
 
+    
+  //  @BeforeAll // 테스트 시작 전 한번만 실행
+    @BeforeEach //각 테스트 시작 전 한번씩 실행
+    public void dataPrep(){
+        System.out.println("============================");
+        String title = "junit";
+        String author = "hyeonjoon";
+        
+        Book book = Book.builder()
+        .title(title)
+        .author(author)
+        .build();
+
+        repository.save(book);
+    }
+
     // 책 등록
     @Test
     public void registerTest(){
         //given (데이터 준비)
-        String title = "junit5";
-        String author = "kevin";
+        String title = "junit";
+        String author = "hyeonjoon";
         
         Book book = Book.builder()
         .title(title)
@@ -39,15 +55,9 @@ public class BookRepositoryTest {
 
     @Test
     public void getBookList(){
-        String title = "junit5";
-        String author = "kevin";
+        String title = "junit";
+        String author = "hyeonjoon";
         
-        Book book = Book.builder()
-        .title(title)
-        .author(author)
-        .build();
-
-         repository.save(book);
         List<Book> list = repository.findAll();
 
         assertEquals(title, list.get(0).getTitle());
@@ -57,15 +67,8 @@ public class BookRepositoryTest {
     @Test
     public void getOneBook(){
 
-        String title = "junit5";
-        String author = "kevin";
-        
-        Book book = Book.builder()
-        .title(title)
-        .author(author)
-        .build();
-
-        repository.save(book);
+        String title = "junit";
+        String author = "hyeonjoon";
 
         Book bookPs = repository.findById(1L).get();
 
