@@ -17,7 +17,12 @@ public class BookRepositoryTest {
 @Autowired
  private BookRepository repository;
 
-    
+    /*
+        @BeforeEach
+        [dataPrep -> getBookList],[dataPrep -> getOneBook]
+        
+    */   
+
   //  @BeforeAll // 테스트 시작 전 한번만 실행
     @BeforeEach //각 테스트 시작 전 한번씩 실행
     public void dataPrep(){
