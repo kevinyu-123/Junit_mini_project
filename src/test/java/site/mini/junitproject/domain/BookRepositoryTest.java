@@ -1,8 +1,10 @@
 package site.mini.junitproject.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,9 +82,18 @@ public class BookRepositoryTest {
         assertEquals(title, bookPs.getTitle());
         assertEquals(author, bookPs.getAuthor()); 
 
-
     }
 
+    //책 삭제
+    @Test
+    public void delBook(){
+        Long id = 1L;
+
+        repository.deleteById(id);
+
+        assertFalse(repository.findById(id).isPresent());
+
+    }
 
 
 
