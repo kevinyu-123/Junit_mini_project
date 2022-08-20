@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.jdbc.Sql;
 
 
 @DataJpaTest //DB 와 관련된 컴포넌트만 메모리에 로딩
@@ -44,8 +44,8 @@ public class BookRepositoryTest {
     @Test
     public void registerTest(){
         //given (데이터 준비)
-        String title = "junit";
-        String author = "hyeonjoon";
+        String title = "junit5";
+        String author = "kevin";
         
         Book book = Book.builder()
         .title(title)
@@ -71,6 +71,8 @@ public class BookRepositoryTest {
         assertEquals(author, list.get(0).getAuthor());
     }
 
+
+    @Sql("classpath:db/tableInit.sql")
     @Test
     public void getOneBook(){
 
@@ -85,6 +87,7 @@ public class BookRepositoryTest {
     }
 
     //책 삭제
+    @Sql("classpath:db/tableInit.sql")
     @Test
     public void delBook(){
         Long id = 1L;
@@ -95,7 +98,32 @@ public class BookRepositoryTest {
 
     }
 
+    //책 수정
+    @Test
+    public void updBook(){
+        Long id = 1L;
+        String title = "junit2";
+        String author = "kev";
 
+        Book book = new Book(id,title,author);
+
+        Book bookPs = repository.save(book);
+         
+        // 수정값 확인
+        // repository.findAll().stream().forEach((b)->{
+        //     System.out.println(b.getId());
+        //     System.out.println(b.getAuthor());
+        //     System.out.println(b.getTitle());
+        //     System.out.println("==============================");
+        // });
+
+        assertEquals(id, bookPs.getId());
+        assertEquals(author, bookPs.getAuthor());
+        assertEquals(title, bookPs.getTitle());
+
+
+
+    }
 
 
 
