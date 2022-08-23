@@ -1,5 +1,9 @@
 package site.mini.junitproject.service;
 
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,5 +30,19 @@ public class BookService {
             return new BookResponseDto().toDto(bookPS);
         }
 
-    
+        // read book list
+        public List<BookResponseDto> getList(){
+            return repository.findAll()
+                        .stream()
+                        .map(new BookResponseDto()::toDto)
+                        .collect(Collectors.toList());
+        }
+
+
+
+
+
+
+
+
 }
