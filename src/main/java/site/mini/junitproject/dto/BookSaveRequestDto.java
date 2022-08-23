@@ -1,9 +1,10 @@
 package site.mini.junitproject.dto;
 
+import lombok.Data;
 import lombok.Setter;
 import site.mini.junitproject.domain.Book;
 
-@Setter
+@Data
 public class BookSaveRequestDto {
     
     private String title;
