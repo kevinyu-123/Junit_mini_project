@@ -13,12 +13,14 @@ import site.mini.junitproject.domain.Book;
 import site.mini.junitproject.domain.BookRepository;
 import site.mini.junitproject.dto.BookResponseDto;
 import site.mini.junitproject.dto.BookSaveRequestDto;
+import site.mini.junitproject.util.MailSender;
 
 @RequiredArgsConstructor
 @Service
 public class BookService {
 
     private final BookRepository repository;
+    private final MailSender mailSender;
 
     // public BookService( BookRepository repository){
     //     this.repository = repository;
@@ -28,6 +30,12 @@ public class BookService {
         @Transactional(rollbackFor = RuntimeException.class)
         public BookResponseDto saveBook(BookSaveRequestDto book){
          Book bookPS = repository.save(book.toEntity());
+
+         if(bookPS != null){
+             if(!mailSender.send()){
+                 throw new RuntimeException("메일 전송 실패");
+             }
+         }
             return new BookResponseDto().toDto(bookPS);
         }
 
