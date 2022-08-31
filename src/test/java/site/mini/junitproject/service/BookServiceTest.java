@@ -1,9 +1,14 @@
 package site.mini.junitproject.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +23,7 @@ import site.mini.junitproject.util.MailSenderStub;
 @ExtendWith(MockitoExtension.class) //가짜 환경 조성
 public class BookServiceTest {
 
-    
+    @InjectMocks //BookService가 메모리에 올라감
     private BookService service;
 
     @Mock
@@ -29,6 +34,7 @@ public class BookServiceTest {
 
     /*
      * mockito = 가짜 객체 보관을 위한 환경을 조성해줌
+     *  @injeckMocks = @Mock 어노테이션을 통하여 생성된 익명 클래스를 주입
      */
 
     @Test
@@ -40,13 +46,19 @@ public class BookServiceTest {
         dto.setTitle("junit test");
 
         //stub
+        when(repository.save(any())).thenReturn(dto.toEntity());
+        when(mailSender.send()).thenReturn(true);
 
         //when
         BookResponseDto responseDto = service.saveBook(dto);
 
         //then
-        assertEquals(dto.getAuthor(),responseDto.getAuthor());
-        assertEquals(dto.getTitle(), responseDto.getTitle());
+        // assertEquals(dto.getAuthor(),responseDto.getAuthor());
+        // assertEquals(dto.getTitle(), responseDto.getTitle());
+
+        assertThat(dto.getTitle()).isEqualTo(responseDto.getTitle());
+        assertThat(dto.getAuthor()).isEqualTo(responseDto.getAuthor());
+
     }
     
 }
