@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import site.mini.junitproject.domain.Book;
 import site.mini.junitproject.domain.BookRepository;
 import site.mini.junitproject.dto.BookResponseDto;
 import site.mini.junitproject.dto.BookSaveRequestDto;
@@ -56,9 +60,23 @@ public class BookServiceTest {
         // assertEquals(dto.getAuthor(),responseDto.getAuthor());
         // assertEquals(dto.getTitle(), responseDto.getTitle());
 
-        assertThat(dto.getTitle()).isEqualTo(responseDto.getTitle());
-        assertThat(dto.getAuthor()).isEqualTo(responseDto.getAuthor());
-
+        assertThat(responseDto.getTitle()).isEqualTo(dto.getTitle());
+        assertThat(responseDto.getAuthor()).isEqualTo(dto.getAuthor());
     }
+
+    @Test
+    public void getBook(){
+
+        List<Book> books = new ArrayList<>();
+        books.add(new Book(1L,"juint","kevin"));
+        books.add(new Book(2L, "spring","hyeonjoon"));
+
+        when(repository.findAll()).thenReturn(books);
+
+        List<BookResponseDto> dto = service.getList();
+
+        assertThat(dto.get(0).getTitle()).isEqualTo("junit"); 
+    }
+
     
 }
