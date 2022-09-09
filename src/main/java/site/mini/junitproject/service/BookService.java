@@ -35,14 +35,15 @@ public class BookService {
                  throw new RuntimeException("메일 전송 실패");
              }
          }
-            return new BookResponseDto().toDto(bookPS);
+            return bookPS.toDto();
         }
 
         // read book list
         public List<BookResponseDto> getList(){
             return repository.findAll()
                         .stream()
-                        .map(new BookResponseDto()::toDto)
+                       // .map(new BookResponseDto()::toDto) // 한번 받은 값을 toDto를 두번 돌림
+                        .map(Book::toDto) 
                         .collect(Collectors.toList());
         }
 
@@ -50,7 +51,9 @@ public class BookService {
         public BookResponseDto getBook(Long id){
            Optional<Book> book = repository.findById(id);
             if(book.isPresent()){
-                return new BookResponseDto().toDto(book.get());
+                Book bookPs = book.get();
+                return bookPs.toDto();
+                
             }else{
                 throw new RuntimeException("해당 아이디가 없습니다.");
             }

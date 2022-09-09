@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import site.mini.junitproject.dto.BookResponseDto;
 
 @NoArgsConstructor
 @Entity
@@ -32,4 +33,11 @@ public class Book {
         this.author = author;
         this.title = title;
     }
+
+    public BookResponseDto toDto(){
+
+        return BookResponseDto.builder().id(id).title(title).author(author).build();
+    }
+
+
 }
