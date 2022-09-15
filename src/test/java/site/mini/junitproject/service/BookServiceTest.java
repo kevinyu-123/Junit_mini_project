@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -78,5 +79,21 @@ public class BookServiceTest {
         assertThat(dto.get(0).getTitle()).isEqualTo("junit"); 
     }
 
+    @Test
+    public void getOneBook(){
+        //given
+        Long id = 1L;
+        Book book = new Book(1L,"junit","kevin");
+        Optional<Book> bookOP = Optional.of(book);
+
+        //stub
+        when(repository.findById(id)).thenReturn(bookOP);
+
+        //when
+        BookResponseDto res = service.getBook(id);
+
+        //then
+        assertThat(res.getTitle()).isEqualTo(book.getTitle());
+    }
     
 }
