@@ -83,10 +83,11 @@ public class BookServiceTest {
     public void getOneBook(){
         //given
         Long id = 1L;
-        Book book = new Book(1L,"junit","kevin");
-        Optional<Book> bookOP = Optional.of(book);
+     
 
         //stub
+        Book book = new Book(1L,"junit","kevin");
+        Optional<Book> bookOP = Optional.of(book);
         when(repository.findById(id)).thenReturn(bookOP);
 
         //when
@@ -96,4 +97,34 @@ public class BookServiceTest {
         assertThat(res.getTitle()).isEqualTo(book.getTitle());
     }
     
+    @Test
+    public void updateBook(){
+        //given
+        Long id = 1L;
+        BookSaveRequestDto dto = new BookSaveRequestDto();
+
+        dto.setTitle("spring");
+        dto.setAuthor("hyeonjoon");
+
+        //stub
+        Book book = new Book(1L,"junit","kevin");
+        Optional<Book> bookOP = Optional.of(book);
+        when(repository.findById(id)).thenReturn(bookOP);
+
+        //when
+        BookResponseDto resDto = service.updateBook(id, dto);
+
+        //then
+        assertThat(resDto.getTitle()).isEqualTo(dto.getTitle());
+
+    }
+
+
+
+
+
+
+
+
+
 }

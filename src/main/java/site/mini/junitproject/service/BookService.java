@@ -70,11 +70,12 @@ public class BookService {
 
         //update book info
         @Transactional(rollbackFor = RuntimeException.class)
-        public void updateBook(Long id,BookSaveRequestDto saveDto){
+        public BookResponseDto updateBook(Long id,BookSaveRequestDto saveDto){
             Optional<Book> book = repository.findById(id);
             if(book.isPresent()){
                 Book bookPs = book.get();
                 bookPs.update(saveDto.getTitle(), saveDto.getAuthor());
+                return bookPs.toDto();
             }else{
                 throw new RuntimeException("해당 아이디가 없습니다.");
             }
