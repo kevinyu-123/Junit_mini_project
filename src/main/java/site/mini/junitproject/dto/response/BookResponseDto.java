@@ -1,4 +1,4 @@
-package site.mini.junitproject.dto;
+package site.mini.junitproject.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

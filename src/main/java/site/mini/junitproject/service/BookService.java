@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import site.mini.junitproject.domain.Book;
 import site.mini.junitproject.domain.BookRepository;
-import site.mini.junitproject.dto.BookResponseDto;
-import site.mini.junitproject.dto.BookSaveRequestDto;
+import site.mini.junitproject.dto.request.BookSaveRequestDto;
+import site.mini.junitproject.dto.response.BookResponseDto;
 import site.mini.junitproject.util.MailSender;
 
 @Slf4j

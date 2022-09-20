@@ -20,8 +20,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import site.mini.junitproject.domain.Book;
 import site.mini.junitproject.domain.BookRepository;
-import site.mini.junitproject.dto.BookResponseDto;
-import site.mini.junitproject.dto.BookSaveRequestDto;
+import site.mini.junitproject.dto.request.BookSaveRequestDto;
+import site.mini.junitproject.dto.response.BookResponseDto;
 import site.mini.junitproject.util.MailSender;
 import site.mini.junitproject.util.MailSenderStub;
 

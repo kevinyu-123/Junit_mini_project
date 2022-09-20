@@ -1,4 +1,4 @@
-package site.mini.junitproject.dto;
+package site.mini.junitproject.dto.request;
 
 import lombok.Data;
 import lombok.Setter;

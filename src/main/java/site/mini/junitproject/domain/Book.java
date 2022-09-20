@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import site.mini.junitproject.dto.BookResponseDto;
+import site.mini.junitproject.dto.response.BookResponseDto;
 
 @NoArgsConstructor
 @Entity
