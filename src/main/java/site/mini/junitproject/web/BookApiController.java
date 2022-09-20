@@ -31,7 +31,6 @@ public class BookApiController { // 컴포지션 = has 관계
     @PostMapping("api/v1/book")
     public ResponseEntity<?> saveBook(@RequestBody @Valid BookSaveRequestDto saveDto, BindingResult bindingResult){
         log.error("bindingresult:" + bindingResult.hasErrors());
-        BookResponseDto dto = service.saveBook(saveDto);
 
         //차후 aop 처리
         if(bindingResult.hasErrors()){
@@ -40,11 +39,10 @@ public class BookApiController { // 컴포지션 = has 관계
                 errorMap.put(fe.getField(),fe.getDefaultMessage());
             }
             System.out.println(errorMap.toString());
-            log.info("errorMap: {}"+ errorMap.toString());
-
-            return new ResponseEntity<>(CmResponseDto.builder().code(2).msg(errorMap.toString()).body(dto).build(), HttpStatus.BAD_REQUEST); // 400 : 잘못된 요청
+            log.info("errorMap: "+ errorMap.toString());
+             throw new RuntimeException(errorMap.toString());
         }
-
+        BookResponseDto dto = service.saveBook(saveDto);
         return new ResponseEntity<>(CmResponseDto.builder().code(1).msg("save success").body(dto).build(), HttpStatus.CREATED); // 201 = insert, 응답뿐만 아니라 바디데이터를 보내줘야 할 경우도 생김.
 
     }
