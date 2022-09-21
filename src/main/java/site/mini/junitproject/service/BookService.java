@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import site.mini.junitproject.domain.Book;
 import site.mini.junitproject.domain.BookRepository;
 import site.mini.junitproject.dto.request.BookSaveRequestDto;
+import site.mini.junitproject.dto.response.BookListResponseDto;
 import site.mini.junitproject.dto.response.BookResponseDto;
 import site.mini.junitproject.util.MailSender;
 
@@ -41,12 +42,16 @@ public class BookService {
         }
 
         // read book list
-        public List<BookResponseDto> getList(){
-            return repository.findAll()
-                        .stream()
-                       // .map(new BookResponseDto()::toDto) // 한번 받은 값을 toDto를 두번 돌림
-                        .map(Book::toDto) 
-                        .collect(Collectors.toList());
+        public BookListResponseDto getList(){
+
+            List<BookResponseDto> dtos = repository.findAll().stream()
+            // .map(new BookResponseDto()::toDto) // 한번 받은 값을 toDto를 두번 돌림
+             .map(Book::toDto) 
+             .collect(Collectors.toList());
+
+            BookListResponseDto result = BookListResponseDto.builder().bookList(dtos).build();
+
+            return result;
         }
 
         // get book

@@ -21,6 +21,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import site.mini.junitproject.domain.Book;
 import site.mini.junitproject.domain.BookRepository;
 import site.mini.junitproject.dto.request.BookSaveRequestDto;
+import site.mini.junitproject.dto.response.BookListResponseDto;
 import site.mini.junitproject.dto.response.BookResponseDto;
 import site.mini.junitproject.util.MailSender;
 import site.mini.junitproject.util.MailSenderStub;
@@ -74,9 +75,9 @@ public class BookServiceTest {
 
         when(repository.findAll()).thenReturn(books);
 
-        List<BookResponseDto> dto = service.getList();
+        BookListResponseDto dto = service.getList();
 
-        assertThat(dto.get(0).getTitle()).isEqualTo("junit"); 
+        assertThat(dto.getBookList().get(0).getTitle()).isEqualTo("junit"); 
     }
 
     @Test
