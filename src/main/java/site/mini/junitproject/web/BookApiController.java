@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,8 +43,7 @@ public class BookApiController { // 컴포지션 = has 관계
             for(FieldError fe : bindingResult.getFieldErrors()){
                 errorMap.put(fe.getField(),fe.getDefaultMessage());
             }
-            System.out.println(errorMap.toString());
-            log.info("errorMap: "+ errorMap.toString());
+             log.info("errorMap: "+ errorMap.toString());
              throw new RuntimeException(errorMap.toString());
         }
         BookResponseDto dto = service.saveBook(saveDto);
@@ -58,19 +59,21 @@ public class BookApiController { // 컴포지션 = has 관계
         return new ResponseEntity<>(CmResponseDto.builder()
             .code(1)
             .msg("book lists")
-            .body(bookList).build(), HttpStatus.OK);
+            .body(bookList).build(), HttpStatus.OK); // 200 = OK
 
     }
 
-    public ResponseEntity<?> getBookOne(){
-
-        return null;
+    @GetMapping("api/v1/book/{id}")
+    public ResponseEntity<?> getBookOne(@PathVariable Long id){
+        BookResponseDto dto = service.getBook(id);
+        return new ResponseEntity<>(CmResponseDto.builder().code(1).msg("one book shown").body(dto).build(), HttpStatus.OK); // 200 = OK
 
     }
 
-    public ResponseEntity<?> deleteBook(){
-
-        return null;
+    @DeleteMapping("api/v1/book/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable Long id){
+        service.deleteBook(id);
+        return new ResponseEntity<>(CmResponseDto.builder().code(1).msg("delete success").body(null).build(), HttpStatus.OK); // 200 = OK
 
     }
 
