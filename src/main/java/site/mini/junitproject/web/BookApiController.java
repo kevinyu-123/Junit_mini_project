@@ -12,8 +12,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -63,23 +65,33 @@ public class BookApiController { // 컴포지션 = has 관계
 
     }
 
-    @GetMapping("api/v1/book/{id}")
+    @GetMapping("/api/v1/book/{id}")
     public ResponseEntity<?> getBookOne(@PathVariable Long id){
         BookResponseDto dto = service.getBook(id);
         return new ResponseEntity<>(CmResponseDto.builder().code(1).msg("one book shown").body(dto).build(), HttpStatus.OK); // 200 = OK
 
     }
 
-    @DeleteMapping("api/v1/book/{id}")
+    @DeleteMapping("/api/v1/book/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable Long id){
         service.deleteBook(id);
         return new ResponseEntity<>(CmResponseDto.builder().code(1).msg("delete success").body(null).build(), HttpStatus.OK); // 200 = OK
 
     }
 
-    public ResponseEntity<?> updateBook(){
+    @PutMapping("/api/v1/book/{id}")
+    public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody @Valid BookSaveRequestDto dto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            Map<String,String> errorMap = new HashMap<String,String>();
+            for(FieldError fe : bindingResult.getFieldErrors()){
+                errorMap.put(fe.getField(),fe.getDefaultMessage());
+            }
+             log.info("errorMap: "+ errorMap.toString());
+             throw new RuntimeException(errorMap.toString());
+        }
+        BookResponseDto resp = service.updateBook(id, dto);
+        return new ResponseEntity<>(CmResponseDto.builder().code(1).msg("save success").body(resp).build(), HttpStatus.OK);
 
-        return null;
 
     }
 
