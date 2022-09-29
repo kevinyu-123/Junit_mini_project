@@ -70,14 +70,14 @@ public class BookServiceTest {
     public void getBook(){
 
         List<Book> books = new ArrayList<>();
-        books.add(new Book(1L,"juint","kevin"));
+        books.add(new Book(1L,"junit","kevin"));
         books.add(new Book(2L, "spring","hyeonjoon"));
 
         when(repository.findAll()).thenReturn(books);
 
         BookListResponseDto dto = service.getList();
 
-        assertThat(dto.getBookList().get(0).getTitle()).isEqualTo("junit"); 
+        assertThat(dto.getBookList().get(0).getTitle()).isEqualTo("spring"); 
     }
 
     @Test

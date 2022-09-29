@@ -2,7 +2,7 @@ package site.mini.junitproject.util;
 
 import org.springframework.stereotype.Component;
 
-// @Component
+ @Component
 public class MailSenderApater implements MailSender {
 
     // private Mail mail;
