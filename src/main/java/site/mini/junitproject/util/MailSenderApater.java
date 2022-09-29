@@ -5,15 +5,15 @@ import org.springframework.stereotype.Component;
  @Component
 public class MailSenderApater implements MailSender {
 
-    // private Mail mail;
+    private Mail mail;
 
-    // public MailSenderApater(){
-    //     this.mail = new Mail();
-    // }
+    public MailSenderApater(){
+        this.mail = new Mail();
+    }
 
     @Override
     public boolean send() {
-        return true;
+        return mail.sendMail();
     }
 
     

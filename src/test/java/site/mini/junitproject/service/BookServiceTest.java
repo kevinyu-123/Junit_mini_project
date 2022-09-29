@@ -24,7 +24,6 @@ import site.mini.junitproject.dto.request.BookSaveRequestDto;
 import site.mini.junitproject.dto.response.BookListResponseDto;
 import site.mini.junitproject.dto.response.BookResponseDto;
 import site.mini.junitproject.util.MailSender;
-import site.mini.junitproject.util.MailSenderStub;
 
 @ExtendWith(MockitoExtension.class) //가짜 환경 조성
 public class BookServiceTest {

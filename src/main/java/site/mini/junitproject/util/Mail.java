@@ -3,9 +3,9 @@ package site.mini.junitproject.util;
 //차후 구현
 public class Mail {
 
-    // public boolean MailSender(){
+    public boolean sendMail(){
 
-    //     return true;
-    // }
+        return true;
+    }
     
 }
