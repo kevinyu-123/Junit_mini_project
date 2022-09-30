@@ -1,10 +1,8 @@
 package site.mini.junitproject.web;
 
 
-import static org.assertj.core.api.Assertions.*;
-
-
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +19,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+import site.mini.junitproject.domain.Book;
+import site.mini.junitproject.domain.BookRepository;
 import site.mini.junitproject.dto.request.BookSaveRequestDto;
 import site.mini.junitproject.service.BookService;
 
@@ -32,11 +32,28 @@ public class BookApiControllerTest {
     private BookService service;
 
     @Autowired
+    private BookRepository repository;
+
+    @Autowired
     private TestRestTemplate rt;
 
     private static ObjectMapper om;
 
     private static HttpHeaders headers;
+
+    @BeforeEach //각 테스트 시작 전 한번씩 실행
+    public void dataPrep(){
+        System.out.println("============================");
+        String title = "junit";
+        String author = "hyeonjoon";
+        
+        Book book = Book.builder()
+        .title(title)
+        .author(author)
+        .build();
+
+        repository.save(book);
+    }
 
     @BeforeAll
     public static void init(){
