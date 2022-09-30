@@ -22,6 +22,7 @@ import site.mini.junitproject.util.MailSender;
 public class BookService {
 
     private final BookRepository repository;
+    
     private final MailSender mailSender;
 
     // public BookService( BookRepository repository){

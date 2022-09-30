@@ -71,6 +71,22 @@ public class BookApiControllerTest {
 
     }
 
+    @Test
+    public void getBookListTest(){
+        //given
+
+        //when
+        HttpEntity<String> request = new HttpEntity<>(null,headers);
+        ResponseEntity<String> response = rt.exchange("/api/v1/book", HttpMethod.GET, request, String.class);
+
+        //then
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        String code = dc.read("$.body.code");
+
+
+
+    }
+
 
 
 
