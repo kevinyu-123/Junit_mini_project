@@ -1,6 +1,9 @@
 package site.mini.junitproject.web;
 
 
+import static org.assertj.core.api.Assertions.*;
+
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.jdbc.Sql;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,6 +92,8 @@ public class BookApiControllerTest {
 
     }
 
+
+    @Sql("classpath:db/tableInit.sql")
     @Test
     public void getBookListTest(){
         //given
@@ -98,7 +104,7 @@ public class BookApiControllerTest {
 
         //then
         DocumentContext dc = JsonPath.parse(response.getBody());
-        String code = dc.read("$.body.code");
+        String code = dc.read("$.code");
 
 
 
