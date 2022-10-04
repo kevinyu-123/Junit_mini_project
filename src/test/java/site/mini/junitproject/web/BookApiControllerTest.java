@@ -93,7 +93,7 @@ public class BookApiControllerTest {
     }
 
 
-    @Sql("classpath:db/tableInit.sql")
+    @Sql("classpath:db/tableInit.sql") // 테이블 초기화
     @Test
     public void getBookListTest(){
         //given
@@ -106,11 +106,26 @@ public class BookApiControllerTest {
         DocumentContext dc = JsonPath.parse(response.getBody());
         String code = dc.read("$.code");
 
-
-
     }
 
+    @Sql("classpath:db/tableInit.sql") // 테이블 초기화
+    @Test
+    public void getOneBook(){
+        //given
+        Integer id = 1;
 
+        //when
+        HttpEntity<String> request = new HttpEntity<>(null,headers);
+        ResponseEntity<String> response = rt.exchange("/api/v1/book/1", HttpMethod.GET, request, String.class);
+
+ 
+        //then
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        String code = dc.read("$.code");
+
+        assertThat(code).isEqualTo(1);
+
+    }
 
 
 
