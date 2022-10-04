@@ -67,6 +67,7 @@ public class BookApiControllerTest {
 
     }
 
+    //책 저장 테스트
     @Test
     public void bookSaveTest() throws JsonProcessingException {
 
@@ -92,7 +93,7 @@ public class BookApiControllerTest {
 
     }
 
-
+    //리스트 보기 테스트
     @Sql("classpath:db/tableInit.sql") // 테이블 초기화
     @Test
     public void getBookListTest(){
@@ -108,6 +109,7 @@ public class BookApiControllerTest {
 
     }
 
+    //한건보기 테스트
     @Sql("classpath:db/tableInit.sql") // 테이블 초기화
     @Test
     public void getOneBook(){
@@ -118,7 +120,6 @@ public class BookApiControllerTest {
         HttpEntity<String> request = new HttpEntity<>(null,headers);
         ResponseEntity<String> response = rt.exchange("/api/v1/book/1", HttpMethod.GET, request, String.class);
 
- 
         //then
         DocumentContext dc = JsonPath.parse(response.getBody());
         String code = dc.read("$.code");
