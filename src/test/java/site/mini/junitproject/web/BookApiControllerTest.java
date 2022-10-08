@@ -126,8 +126,14 @@ public class BookApiControllerTest {
 
         assertThat(code).isEqualTo(1);
 
+
     }
 
+    //책삭제 테트
+    @Test
+    public void deleteBook(){
+        
+    }
 
 
 
