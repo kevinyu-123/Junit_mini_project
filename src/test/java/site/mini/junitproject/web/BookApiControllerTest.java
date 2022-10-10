@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,6 +31,7 @@ import site.mini.junitproject.service.BookService;
 
 //통합테스트 = 모든레이어를 한번에 테스트
 @SpringBootTest(webEnvironment =  WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("dev")
 public class BookApiControllerTest {
     
     @Autowired
@@ -112,7 +114,7 @@ public class BookApiControllerTest {
     //한건보기 테스트
     @Sql("classpath:db/tableInit.sql") // 테이블 초기화
     @Test
-    public void getOneBook(){
+    public void getOneBookTest(){
         //given
         Integer id = 1;
 
@@ -132,7 +134,7 @@ public class BookApiControllerTest {
     //책삭제 테스트
     @Sql("classpath:db/tableInit.sql")
     @Test
-    public void deleteBook(){
+    public void deleteBookTest(){
         //given
         Integer id = 1;
 
@@ -147,16 +149,28 @@ public class BookApiControllerTest {
         assertThat(code).isEqualTo(1);
     }
 
+    //책 수정 테스트
+    @Sql("classpath:db/tableInit.sql")
+    @Test
+    public void updateBookTest() throws Exception{
+        //given 
+        Integer id = 1;
+        BookSaveRequestDto dto = new BookSaveRequestDto();
+        dto.setAuthor("kevinyu");
+        dto.setTitle("spring-test");
 
+        String body = om.writeValueAsString(dto); // json object로 변경        
 
+        //when 
+        HttpEntity<String> request = new HttpEntity<>(body,headers);
+        ResponseEntity<String> response = rt.exchange("/api/v1/book/1", HttpMethod.PUT, request, String.class);
 
+        //then
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        Integer code = dc.read("$.code");
 
-
-
-
-
-
-
+        assertThat(code).isEqualTo(1);
+    }
 
 
 

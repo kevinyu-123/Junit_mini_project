@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import site.mini.junitproject.domain.Book;
 import site.mini.junitproject.domain.BookRepository;
@@ -26,6 +27,7 @@ import site.mini.junitproject.dto.response.BookResponseDto;
 import site.mini.junitproject.util.MailSender;
 
 @ExtendWith(MockitoExtension.class) //가짜 환경 조성
+@ActiveProfiles("dev")
 public class BookServiceTest {
 
     @InjectMocks //BookService가 메모리에 올라감
