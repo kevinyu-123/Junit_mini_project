@@ -30,7 +30,6 @@ public class BookRepositoryTest {
   //  @BeforeAll // 테스트 시작 전 한번만 실행
     @BeforeEach //각 테스트 시작 전 한번씩 실행
     public void dataPrep(){
-        System.out.println("============================");
         String title = "junit";
         String author = "hyeonjoon";
         
@@ -110,14 +109,6 @@ public class BookRepositoryTest {
         Book book = new Book(id,title,author);
 
         Book bookPs = repository.save(book);
-         
-        // 수정값 확인
-        // repository.findAll().stream().forEach((b)->{
-        //     System.out.println(b.getId());
-        //     System.out.println(b.getAuthor());
-        //     System.out.println(b.getTitle());
-        //     System.out.println("==============================");
-        // });
 
         assertEquals(id, bookPs.getId());
         assertEquals(author, bookPs.getAuthor());
