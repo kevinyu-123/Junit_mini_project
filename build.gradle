@@ -30,6 +30,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation:2.7.1'
+	implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '2.8.6'
+
 
 }
 
